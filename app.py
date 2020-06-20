@@ -1,11 +1,18 @@
 from flask import Flask, jsonify, request
 from collaborativeFiltering import CollaborativeFilteringModel
 from contentBased import ContentBasedModel
+import pickle
 
 app = Flask(__name__)
 
-content = ContentBasedModel()
-collaborative = CollaborativeFilteringModel()
+
+coll = open('resources\\collaborativeFiltering.txt', 'rb')
+collaborative = pickle.load(coll)
+coll.close()
+
+con = open('resources\\contentBased.txt', 'rb')
+content = pickle.load(con)
+con.close()
 
 
 @app.route('/')
