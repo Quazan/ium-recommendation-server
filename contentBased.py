@@ -7,7 +7,7 @@ from sklearn.preprocessing import normalize
 class ContentBasedModel:
 
     def __init__(self):
-        self.df = pd.read_json("resources\\products.jsonl", lines=True)
+        self.df = pd.read_json("products.jsonl", lines=True)
 
         self.df = self.df.drop(self.df[self.df.price > 1000000].index)
         self.df = self.df.drop(self.df[self.df.price <= 0].index)

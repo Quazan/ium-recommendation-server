@@ -5,8 +5,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 class CollaborativeFilteringModel:
     def __init__(self):
-        sessions = pd.read_json('resources\\sessions.jsonl', lines=True)
-        self.products = pd.read_json('resources\\products.jsonl', lines=True)
+        sessions = pd.read_json('sessions.jsonl', lines=True)
+        self.products = pd.read_json('products.jsonl', lines=True)
 
         sessionToUser = {}
         for index, row in sessions.iterrows():

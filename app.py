@@ -6,11 +6,11 @@ import pickle
 app = Flask(__name__)
 
 
-coll = open('resources\\collaborativeFiltering.txt', 'rb')
+coll = open('collaborativeFiltering.txt', 'rb')
 collaborative = pickle.load(coll)
 coll.close()
 
-con = open('resources\\contentBased.txt', 'rb')
+con = open('contentBased.txt', 'rb')
 content = pickle.load(con)
 con.close()
 
