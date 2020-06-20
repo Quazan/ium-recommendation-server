@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
 from collaborativeFiltering import CollaborativeFilteringModel
 from contentBased import ContentBasedModel
 import pickle
+import os
+
 
 app = Flask(__name__)
-
 
 coll = open('collaborativeFiltering.txt', 'rb')
 collaborative = pickle.load(coll)
@@ -13,6 +15,21 @@ coll.close()
 con = open('contentBased.txt', 'rb')
 content = pickle.load(con)
 con.close()
+
+DATABASE_URL = os.environ['DATABASE_URL']
+#DATABASE_URL = 'postgres://qryefukcoptifa:8d38e8b6b07b4427cf3183901c2fe54e71856c55e78547a8e5b79aebef44de9e@ec2-79-125-26-232.eu-west-1.compute.amazonaws.com:5432/d1bhsiu68fpo53'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+
+class Logs(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    mode = db.Column(db.String, nullable=False)
+    prediction = db.Column(db.String, nullable=False)
+    product_id = db.Column(db.Integer, nullable=True)
+    user_id = db.Column(db.Integer, nullable=True)
 
 
 @app.route('/')
@@ -32,6 +49,9 @@ def predict():
         pred = collaborative.predict(userId)
         mod = 'user based'
 
+    data = Logs(user_id=userId, product_id=productId, mode=mod, prediction=str(pred))
+    db.session.add(data)
+    db.session.commit()
     return jsonify(user=userId,
                    product=productId,
                    prediction=pred,
@@ -41,15 +61,23 @@ def predict():
 @app.route('/collaborative')
 def predictCollaborative():
     userId = int(request.args.get('userId'))
+    pred = collaborative.predict(userId)
+    data = Logs(user_id=userId, mode='user based', prediction=str(pred))
+    db.session.add(data)
+    db.session.commit()
     return jsonify(user=userId,
-                   prediction=collaborative.predict(userId))
+                   prediction=pred)
 
 
 @app.route('/content')
 def predictionContent():
     productId = int(request.args.get('productId'))
+    pred = content.predict(productId)
+    data = Logs(product_id=productId, mode='content based', prediction=str(pred))
+    db.session.add(data)
+    db.session.commit()
     return jsonify(product=productId,
-                   prediction=content.predict(productId))
+                   prediction=pred)
 
 
 if __name__ == '__main__':
