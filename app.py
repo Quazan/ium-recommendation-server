@@ -29,8 +29,8 @@ con = open('contentBased.txt', 'rb')
 content = pickle.load(con)
 con.close()
 
-DATABASE_URL = os.environ['DATABASE_URL']
-#DATABASE_URL = 'postgres://qryefukcoptifa:8d38e8b6b07b4427cf3183901c2fe54e71856c55e78547a8e5b79aebef44de9e@ec2-79-125-26-232.eu-west-1.compute.amazonaws.com:5432/d1bhsiu68fpo53'
+#DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = 'postgres://qryefukcoptifa:8d38e8b6b07b4427cf3183901c2fe54e71856c55e78547a8e5b79aebef44de9e@ec2-79-125-26-232.eu-west-1.compute.amazonaws.com:5432/d1bhsiu68fpo53'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
