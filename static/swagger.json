@@ -1,15 +1,140 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "sean",
+    "description": "ium",
     "version": "1.0.0",
-    "title": "IUM-recommendation-server",
-    "contact": {
-      "email": "seanwasere@gmail.com"
+    "title": "IUM-recommendation-server"
+  },
+
+  "paths": {
+    "/predict": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "query",
+          "required": true,
+          "description": "User ID for which you want to get recommendation",
+          "type": "number"
+        }, 
+        {
+          "name": "productId",
+          "in": "query",
+          "required": true,
+          "description": "Product ID",
+          "type": "number"
+        }
+      ],
+      "get": {
+        "summary": "Return prediction with tests A/B",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/predictResponse"
+            }
+          }
+        }
+      }
     },
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
+
+    "/collaborative": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "query",
+          "required": true,
+          "description": "User ID for which you want to get recommendation",
+          "type": "number"
+        }
+      ],
+      "get": {
+        "summary": "Return prediction using collaborative filtering model",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/collaborativeResponse"
+            }
+          }
+        }
+      }
+    },
+
+    "/content": {
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "query",
+          "required": true,
+          "description": "Product ID",
+          "type": "number"
+        }
+      ],
+      "get": {
+        "summary": "Return prediction using content based model",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/contentResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "schemas": {
+      "predictResponse": {
+          "type": "object",
+          "properties": {
+            "model": {
+              "type": "string",
+              "format": "string"
+            },
+            "prediction": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "product": {
+              "type": "number"
+            },
+            "user": {
+              "type": "number"
+            }
+          }
+      },
+      "collaborativeResponse":{
+        "type": "object",
+          "properties": {
+            "prediction": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "user": {
+              "type": "number"
+            }
+          }
+      },
+      "contentResponse":{
+        "type": "object",
+          "properties": {
+            "prediction": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "product": {
+              "type": "number"
+            }
+          }
+      }
     }
   }
 }
