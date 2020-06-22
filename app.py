@@ -4,9 +4,22 @@ from collaborativeFiltering import CollaborativeFilteringModel
 from contentBased import ContentBasedModel
 import pickle
 import os
-
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
+
+### swagger specific ###
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "IUM-recommendation-server"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+### end swagger specific ###
 
 coll = open('collaborativeFiltering.txt', 'rb')
 collaborative = pickle.load(coll)
