@@ -31,7 +31,7 @@ content = pickle.load(con)
 con.close()
 
 DATABASE_URL = os.environ['DATABASE_URL']
-#ATABASE_URL = 'postgres://qryefukcoptifa:8d38e8b6b07b4427cf3183901c2fe54e71856c55e78547a8e5b79aebef44de9e@ec2-79-125-26-232.eu-west-1.compute.amazonaws.com:5432/d1bhsiu68fpo53'
+#DATABASE_URL = 'postgres://qryefukcoptifa:8d38e8b6b07b4427cf3183901c2fe54e71856c55e78547a8e5b79aebef44de9e@ec2-79-125-26-232.eu-west-1.compute.amazonaws.com:5432/d1bhsiu68fpo53'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -48,11 +48,16 @@ class Logs(db.Model):
 
 @app.route('/')
 def hello_world():
-    return """Endpoints:\n
-                /predict?userId=xxx&productId=yyy\n
-                /collaborative?userId=xxx\n
-                /content?productId=xxx\n
-                SWAGGER UI: /swagger"""
+    return """
+            <b>Endpoints:</b><br/>
+            <ul>
+                <li> /predict?userId=xxx&productId=yyy </li>
+                <li> /collaborative?userId=xxx </li>
+                <li> /content?productId=xxx </li>
+            </ul>
+            <hr/>
+            <b>SWAGGER UI:</b> <br/> /swagger
+            """
 
 
 @app.route('/predict')
