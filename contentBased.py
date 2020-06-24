@@ -51,8 +51,6 @@ class ContentBasedModel:
 
         for i, row in enumerate(self.cosine_sim):
             for j, elem in enumerate(row):
-                idxi = list(self.df.index)[i]
-                idxj = list(self.df.index)[j]
                 self.cosine_sim[i][j] = diff_table[i][j] * zmienna + elem * (1 - zmienna)
 
     def predict(self, product_id):
