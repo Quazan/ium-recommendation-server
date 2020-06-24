@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "description": "ium",
+    "description": "Project IUM - system makes recommendation of products",
     "version": "1.0.0",
     "title": "IUM-recommendation-server"
   },
@@ -20,7 +20,7 @@
           "name": "productId",
           "in": "query",
           "required": true,
-          "description": "Product ID",
+          "description": "Current product ID",
           "type": "number"
         }
       ],
@@ -66,7 +66,7 @@
           "name": "productId",
           "in": "query",
           "required": true,
-          "description": "Product ID",
+          "description": "Current product ID",
           "type": "number"
         }
       ],

@@ -48,7 +48,11 @@ class Logs(db.Model):
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return """Endpoints:\n
+                /predict?userId=xxx&productId=yyy\n
+                /collaborative?userId=xxx\n
+                /content?productId=xxx\n
+                SWAGGER UI: /swagger"""
 
 
 @app.route('/predict')
